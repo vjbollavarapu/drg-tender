@@ -89,3 +89,5 @@ Would you like me to now prepare a **PPTX deck** that includes:
 4. Responsibilities (Hospital vs KKM vs Vendor)
 
 So you can use it directly for **tender submission / stakeholder demo**?
+
+
