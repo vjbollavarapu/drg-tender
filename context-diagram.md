@@ -8,24 +8,49 @@ I’ll give you two levels:
 Shows the **big picture**: who uses the system and how data flows.
 
 ```mermaid
-flowchart LR
-    Hospital["Hospital HIS (Doctors, Coders, Finance)"]
-    KKM["KKM HQ (Admin, Finance, Analysts)"]
-    Insurer["Insurers / Panel Companies"]
-    SMRP["SMRP (Patient Data Warehouse)"]
-    MyGDX["MyGDX (Gov Data Exchange)"]
-
+flowchart TB
     subgraph DRGSystem["National DRG System (MyGovCloud@CFA)"]
-        Portal["Web Portal (Hospitals & KKM)"]
-        API["REST / SFTP APIs"]
+        LB["Load Balancer + WAF"]
+
+        subgraph K8s["Kubernetes Cluster"]
+            Intake["Case Intake Service (FastAPI)"]
+            DRG["DRG Grouping Service (FastAPI + Rules)"]
+            Tariff["Tariff Engine (FastAPI)"]
+            Report["Reporting & Analytics (FastAPI + BI)"]
+            Auth["Identity & Access (Keycloak)"]
+            AI["AI/ML Service (Python / MLflow)"]
+        end
+
+        subgraph Data["Data Layer"]
+            DB["PostgreSQL (Transactions)"]
+            DWH["ClickHouse (Analytics)"]
+            DL["S3 / MinIO (Data Lake)"]
+        end
     end
 
-    Hospital -->|Submit Cases (API / SFTP)| DRGSystem
-    DRGSystem -->|DRG Codes & Tariffs| Hospital
-    DRGSystem -->|Funding & Analytics| KKM
-    DRGSystem -->|Claims Data| Insurer
-    DRGSystem -->|Data Exchange| SMRP
-    DRGSystem -->|Inter-agency Data| MyGDX
+    Hospital["Hospital HIS"] -->|API / SFTP| LB
+    SMRP["SMRP"] -->|Batch Data| LB
+    MyGDX["MyGDX"] -->|API| LB
+
+    LB --> Intake
+    Intake --> DRG
+    DRG --> Tariff
+    Tariff --> Report
+    AI --> Report
+    Auth --> Intake
+    Auth --> DRG
+    Auth --> Tariff
+    Auth --> Report
+
+    Intake --> DB
+    DRG --> DB
+    Tariff --> DB
+    Report --> DWH
+    DB --> DWH
+    DWH --> DL
+
+    Report -->|Dashboards| Hospital
+    Report -->|Funding & Analytics| KKM["KKM HQ"]
 ```
 
 ---
