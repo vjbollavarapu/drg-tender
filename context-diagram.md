@@ -9,19 +9,19 @@ Shows the **big picture**: who uses the system and how data flows.
 
 ```mermaid
 flowchart LR
-    Hospital["🏥 Hospital HIS\n(Doctors, Coders, Finance)"]
-    KKM["🏛️ KKM HQ\n(Admin, Finance, Analysts)"]
-    Insurer["💼 Insurers / Panel Companies"]
-    SMRP["📡 SMRP\n(Patient Data Warehouse)"]
-    MyGDX["📡 MyGDX\n(Gov Data Exchange)"]
+    Hospital["Hospital HIS (Doctors, Coders, Finance)"]
+    KKM["KKM HQ (Admin, Finance, Analysts)"]
+    Insurer["Insurers / Panel Companies"]
+    SMRP["SMRP (Patient Data Warehouse)"]
+    MyGDX["MyGDX (Gov Data Exchange)"]
 
-    subgraph DRGSystem["☁️ National DRG System (MyGovCloud@CFA)"]
-        Portal["🌐 Web Portal\n(Hospitals & KKM)"]
-        API["🔗 REST/SFTP APIs"]
+    subgraph DRGSystem["National DRG System (MyGovCloud@CFA)"]
+        Portal["Web Portal (Hospitals & KKM)"]
+        API["REST / SFTP APIs"]
     end
 
-    Hospital -->|Submit Cases\n(API/SFTP)| DRGSystem
-    DRGSystem -->|DRG Codes + Tariffs| Hospital
+    Hospital -->|Submit Cases (API / SFTP)| DRGSystem
+    DRGSystem -->|DRG Codes & Tariffs| Hospital
     DRGSystem -->|Funding & Analytics| KKM
     DRGSystem -->|Claims Data| Insurer
     DRGSystem -->|Data Exchange| SMRP
