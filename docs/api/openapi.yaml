@@ -1,0 +1,204 @@
+
+---
+
+### `docs/api/openapi.yaml`
+```yaml
+openapi: 3.0.3
+info:
+  title: National DRG System API
+  version: "1.0.0"
+servers:
+  - url: https://api.example.my/v1
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CaseSubmitRequest:
+      type: object
+      required: [tenant_id, patient_hash, admission_type, icd_codes]
+      properties:
+        tenant_id: { type: string }
+        patient_hash: { type: string, description: "hashed identifier, no PII" }
+        admission_type: { type: string, enum: [outpatient, daycare, inpatient] }
+        admission_dt: { type: string, format: date-time }
+        discharge_dt: { type: string, format: date-time }
+        icd_codes: { type: array, items: { type: string } }
+        procedure_codes: { type: array, items: { type: string } }
+        source_system: { type: string, enum: [HIS, SMRP, MANUAL] }
+    CaseRef:
+      type: object
+      properties:
+        case_id: { type: string }
+        status: { type: string, enum: [submitted, grouped, tariffed, rejected, appeal_pending] }
+    CaseDetail:
+      allOf:
+        - $ref: '#/components/schemas/CaseRef'
+        - type: object
+          properties:
+            tenant_id: { type: string }
+            admission_type: { type: string }
+            drg_code: { type: string, nullable: true }
+            severity: { type: string, nullable: true }
+            weight: { type: number, format: float, nullable: true }
+            computed_tariff: { type: number, format: float, nullable: true }
+            currency: { type: string, default: MYR }
+    DRGResult:
+      type: object
+      properties:
+        case_id: { type: string }
+        drg_code: { type: string }
+        severity: { type: string }
+        weight: { type: number, format: float }
+        grouped_at: { type: string, format: date-time }
+    TariffResult:
+      type: object
+      properties:
+        case_id: { type: string }
+        drg_code: { type: string }
+        base_rate_id: { type: string }
+        computed_tariff: { type: number, format: float }
+        currency: { type: string, default: MYR }
+        computed_at: { type: string, format: date-time }
+    BatchStatus:
+      type: object
+      properties:
+        batch_id: { type: string }
+        status: { type: string, enum: [received, validated, loaded, failed] }
+        errors: { type: integer }
+    Error:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string }
+        code: { type: string }
+        details: { type: object }
+
+paths:
+  /cases:
+    post:
+      summary: Submit case (async idempotent)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CaseSubmitRequest' }
+      responses:
+        "202":
+          description: Accepted
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CaseRef' }
+        "4XX": { description: Client error, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+        "5XX": { description: Server error }
+    get:
+      summary: List cases
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query; name: tenant_id; schema: { type: string }; required: false
+        - in: query; name: status; schema: { type: string }
+        - in: query; name: from; schema: { type: string, format: date }
+        - in: query; name: to; schema: { type: string, format: date }
+        - in: query; name: page; schema: { type: integer, minimum: 1 }
+        - in: query; name: page_size; schema: { type: integer, minimum: 1, maximum: 200 }
+      responses:
+        "200":
+          description: List
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/CaseRef' }
+
+  /cases/{case_id}:
+    get:
+      summary: Get case detail
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: case_id; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/CaseDetail' } } } }
+        "404": { description: Not found }
+
+  /drg/{case_id}:
+    get:
+      summary: Get DRG result for case
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: case_id; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/DRGResult' } } } }
+        "404": { description: Not found }
+
+  /tariffs/{case_id}:
+    get:
+      summary: Get tariff result for case
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: case_id; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/TariffResult' } } } }
+        "404": { description: Not found }
+
+  /batches/{batch_id}:
+    get:
+      summary: Get batch status
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: batch_id; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/BatchStatus' } } } }
+        "404": { description: Not found }
+
+  /reports/daily-tariffs:
+    get:
+      summary: Daily tariffs
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query; name: tenant_id; schema: { type: string }
+        - in: query; name: start; schema: { type: string, format: date }
+        - in: query; name: end; schema: { type: string, format: date }
+        - in: query; name: format; schema: { type: string, enum: [json, csv], default: json }
+      responses:
+        "200": { description: OK }
+
+  /reports/drg-mix:
+    get:
+      summary: DRG mix
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query; name: tenant_id; schema: { type: string }
+        - in: query; name: start; schema: { type: string, format: date }
+        - in: query; name: end; schema: { type: string, format: date }
+      responses:
+        "200": { description: OK }
+
+  /ref/drg-weights:
+    get:
+      summary: DRG weights lookup
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query; name: drg_code; schema: { type: string }
+        - in: query; name: version; schema: { type: string }
+      responses:
+        "200": { description: OK }
+
+  /ref/base-rate:
+    get:
+      summary: Base rate lookup
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: query; name: facility_class; schema: { type: string, enum: [A, B, C, DAYCARE, OPD] }
+        - in: query; name: effective_date; schema: { type: string, format: date }
+      responses:
+        "200": { description: OK }
