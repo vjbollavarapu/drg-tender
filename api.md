@@ -11,14 +11,14 @@ flowchart LR
   MyGDX[MyGDX]
 
   %% Edge
-  LB[Load Balancer + WAF]
+  LB[Load Balancer and WAF]
   SFTPGW[SFTP Gateway]
 
   %% Auth
-  Auth[OIDC AuthZ Server (Keycloak)]
+  Auth[OIDC Authorization Server - Keycloak]
 
   %% API Router
-  APIRouter[API Gateway / Ingress + FastAPI Routers]
+  APIRouter[API Gateway or Ingress and FastAPI Routers]
 
   %% Microservices
   subgraph SVC[FastAPI Microservices on Kubernetes]
@@ -27,26 +27,27 @@ flowchart LR
     Tariff[Tariff Engine API]
     Appeals[Appeals API]
     Reports[Reporting API]
-    Admin[Admin/Config API]
+    Admin[Admin and Config API]
   end
 
   %% Async backbone
   Kafka[(Kafka Topics)]
-  DL[S3/MinIO Data Lake]
+  DL[S3 or MinIO Data Lake]
 
   %% Data stores
-  DB[(PostgreSQL - OLTP)]
-  DWH[(ClickHouse - Analytics)]
+  DB[(PostgreSQL OLTP)]
+  DWH[(ClickHouse Analytics)]
 
   %% Observability
-  Obs[Observability: Prometheus/Grafana, Logs, Traces]
+  Obs[Observability - Prometheus, Grafana, Logs, Traces]
 
   %% Web frontends
   KKMPortal[KKM Web Portal]
   HospPortal[Hospital Web Portal]
 
   %% Flows
-  Hospital -- REST/JSON --> LB --> Auth
+  Hospital -->|REST JSON| LB
+  LB --> Auth
   Auth --> APIRouter
   APIRouter --> Intake
   APIRouter --> Reports
@@ -55,26 +56,37 @@ flowchart LR
 
   Intake --> DB
   Intake --> Kafka
-  Kafka --> DRG --> DB
-  DRG --> Tariff --> DB
+  Kafka --> DRG
+  DRG --> DB
+  DRG --> Tariff
+  Tariff --> DB
   Reports --> DWH
   DB --> DWH
   DWH --> Reports
 
   %% Portals
-  KKM --> LB --> Auth --> KKMPortal --> Reports
-  Hospital --> LB --> Auth --> HospPortal --> Reports
+  KKM --> LB
+  LB --> Auth
+  Auth --> KKMPortal
+  KKMPortal --> Reports
+
+  Hospital --> LB
+  LB --> Auth
+  Auth --> HospPortal
+  HospPortal --> Reports
 
   %% SFTP path
-  Hospital -- SFTP --> SFTPGW --> DL --> Intake
+  Hospital -->|SFTP| SFTPGW
+  SFTPGW --> DL
+  DL --> Intake
   SFTPGW -. audit .-> DL
 
   %% Outbound exchanges
-  Reports -- exports/feeds --> SMRP
-  Reports -- APIs/feeds --> MyGDX
+  Reports -->|exports or feeds| SMRP
+  Reports -->|APIs or feeds| MyGDX
 
   %% Observability taps
-  SVC -. metrics/logs/traces .-> Obs
+  SVC -. metrics logs traces .-> Obs
   APIRouter -. access logs .-> Obs
 ```
 
