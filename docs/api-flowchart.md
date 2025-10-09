@@ -352,8 +352,6 @@ flowchart LR
   ReportsAPI -->|CSV or JSON| User
 
 ```
-
-```markdown
 ## Analyst Extracts and Publication Loop
 
 ```mermaid
