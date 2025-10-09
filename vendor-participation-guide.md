@@ -137,7 +137,3 @@ You are responsible for **building and delivering the system** — not for custo
 ---
 
 ✅ With this, you’ll have a **comprehensive preparation document** to guide your work and respond to KKM expectations.
-
----
-
-Would you like me to generate this into a **professional PPTX deck** (with diagrams + checklists) so you can use it directly for tender briefing and internal planning?
