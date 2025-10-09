@@ -1,3 +1,4 @@
+```
 erDiagram
   %% stubs for cross refs
   DRG_ASSIGNMENT { string episode_id string drg_code string drg_version }
@@ -20,8 +21,8 @@ erDiagram
   TARIFF_RESULT }o--|| BASE_RATE : applies
   EPISODE_DIAGNOSIS }o--|| ICD10 : uses
   EPISODE_PROCEDURE }o--|| PROC_CODE : uses
-
-
+```
+```
 erDiagram
   DRG_ASSIGNMENT { string episode_id string drg_code string drg_version }
   TARIFF_RESULT  { string episode_id string drg_code string base_rate_id }
@@ -42,3 +43,4 @@ erDiagram
   EPISODE_DIAGNOSIS }o--|| ICD10 : uses
   EPISODE_PROCEDURE }o--|| PROC_CODE : uses
   OUTLIER_POLICY }o--|| DRG_MASTER
+```
