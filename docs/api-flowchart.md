@@ -351,7 +351,7 @@ flowchart LR
   DWH --> ReportsAPI
   ReportsAPI -->|CSV or JSON| User
 
-
+```
 
 ```markdown
 ## Analyst Extracts and Publication Loop
