@@ -192,12 +192,22 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  User[KKM or Hospital Portal] -->|GET /reports/*| LB --> Auth
-  Auth --> ReportsAPI[Reporting API]
-  ReportsAPI --> DWH[(ClickHouse)]
-  ReportsAPI --> Views[DB Read Views (optional)]
+  User[Portal User]
+  LB[Load Balancer]
+  Auth[OIDC Authorization]
+  ReportsAPI[Reporting API]
+  DWH[(ClickHouse)]
+  Views[DB Read Views]
+  DB[(PostgreSQL)]
+
+  User -->|GET reports| LB
+  LB --> Auth
+  Auth --> ReportsAPI
+  ReportsAPI --> DWH
+  ReportsAPI --> Views
+  Views --> DB
   DWH --> ReportsAPI
-  ReportsAPI -->|CSV/PDF/JSON| User
+  ReportsAPI -->|CSV or JSON| User
 ```
 
 **Notes**
