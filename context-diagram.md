@@ -107,17 +107,3 @@ flowchart LR
 ---
 
 <img width="1536" height="1886" alt="national-drg-diagram" src="https://github.com/user-attachments/assets/c3b7b779-f67b-478e-8b31-d93cb1eb2592" />
-
-
-Would you like me to now prepare a **PPTX deck** that includes:
-
-1. Context Diagram
-2. Container Diagram
-3. Microservices Workflow (previous one)
-4. Responsibilities (Hospital vs KKM vs Vendor)
-
-So you can use it directly for **tender submission / stakeholder demo**?
-
-
-
-
