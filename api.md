@@ -96,30 +96,47 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  Client[HIS Client] -->|POST /cases (JSON)| Edge[LB + WAF]
-  Edge --> Auth[OIDC: Bearer token]
-  Auth --> API[FastAPI Router: /cases]
-  API -->|Schema validate + RBAC| V{Valid?}
-  V -- No --> E400[HTTP 400/422 Validation Error]
-  V -- Yes --> IDEMP{Idempotency-Key header present?}
-  IDEMP -- No --> Save1[Insert new case]
-  IDEMP -- Yes --> CheckKey{Key seen before?}
-  CheckKey -- Yes --> E208[208 Already Reported (or 200 with prior result)]
+  %% Nodes
+  Client[HIS Client]
+  Edge[Load Balancer and WAF]
+  Auth[OIDC Authorization]
+  API_Router[FastAPI Router - cases]
+  V{Valid}
+  IDEMP{Idempotency Key present}
+  CheckKey{Key seen before}
+  Save1[Insert new case]
+  DB[(PostgreSQL OLTP)]
+  Kafka[(Kafka topic case_submitted)]
+  DRG[DRG Engine]
+  Tariff[Tariff Engine]
+  E400[HTTP 400 or 422 validation error]
+  E208[208 Already Reported]
+  R202[HTTP 202 Accepted with location]
+  API_Get[FastAPI Router - cases by id]
+  R200[HTTP 200 JSON status]
+
+  %% Edges
+  Client -->|POST cases JSON| Edge
+  Edge --> Auth
+  Auth --> API_Router
+  API_Router -->|schema and RBAC| V
+  V -- No --> E400
+  V -- Yes --> IDEMP
+  IDEMP -- No --> Save1
+  IDEMP -- Yes --> CheckKey
+  CheckKey -- Yes --> E208
   CheckKey -- No --> Save1
 
-  Save1 --> DB[(PostgreSQL)]
-  Save1 --> EVT[Publish event to Kafka topic: case.submitted]
-  EVT --> DRG[DRG Engine consumer]
+  Save1 --> DB
+  Save1 --> Kafka
+  Kafka --> DRG
   DRG -->|group| DB
-  DRG --> EVT2[Publish: case.grouped]
-  EVT2 --> Tariff[Tariff Engine consumer]
+  DRG --> Tariff
   Tariff -->|compute tariff| DB
-  Tariff --> EVT3[Publish: case.tariffed]
 
-  API --> R202[HTTP 202 Accepted + Location: /cases/{id}]
-  Client -->|GET /cases/{id}| API2[FastAPI Router: /cases/{id}]
-  API2 --> DB
-  DB --> R200[HTTP 200 JSON (status: submitted/grouped/tariffed)]
+  API_Router --> R202
+  Client -->|GET case by id| API_Get
+  API_Get --> DB --> R200
 ```
 
 **Notes**
