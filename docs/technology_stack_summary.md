@@ -84,5 +84,3 @@
 - **Outputs:** versioned tables for `ref.drg_weight`, `ref.base_rate`, and optional trim/outlier policies.
 - **Integration back:** upload via Admin/Config API or secure object storage, with checksum and audit trail.
 - **Governance:** provenance records (model name, version, dataset snapshot, approver, date), immutable logs, and effective-date windows.
-
-## Optional repository layout
