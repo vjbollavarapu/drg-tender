@@ -330,3 +330,21 @@ flowchart LR
   HealthAPI -. metrics .-> Obs
   SVC -. logs traces .-> Obs
 
+```markdown
+## Analyst Extracts and Publication Loop
+
+```mermaid
+flowchart LR
+  DWH[(ClickHouse)]
+  Stata[Stata]
+  TreeAge[TreeAge]
+  AdminAPI[Admin Config API]
+  REF[Reference Tables]
+  Engines[DRG and Tariff Engines]
+
+  DWH -->|dataset export| Stata
+  DWH -->|dataset export| TreeAge
+  Stata -->|weights output| AdminAPI
+  TreeAge -->|policy output| AdminAPI
+  AdminAPI -->|validate and publish| REF
+  REF --> Engines
