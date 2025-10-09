@@ -64,6 +64,23 @@ components:
         computed_tariff: { type: number, format: float }
         currency: { type: string, default: MYR }
         computed_at: { type: string, format: date-time }
+    HealthStatus:
+      type: object
+      properties:
+        status: { type: string, enum: [ok, degraded, down] }
+        timestamp: { type: string, format: date-time }
+    ReadinessStatus:
+      type: object
+      properties:
+        status: { type: string, enum: [ready, not_ready] }
+        checks:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              status: { type: string, enum: [ok, fail] }
+              detail: { type: string }
     BatchStatus:
       type: object
       properties:
