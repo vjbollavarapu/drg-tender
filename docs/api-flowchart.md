@@ -357,6 +357,9 @@ flowchart LR
 ## Analyst Extracts and Publication Loop
 
 ```mermaid
+## Analyst Extracts and Publication Loop
+
+```mermaid
 flowchart LR
   DWH[(ClickHouse)]
   Stata[Stata]
