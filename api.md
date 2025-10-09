@@ -150,17 +150,34 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-  Sender[Hospital HIS] -->|SFTP PUT| GW[SFTP Gateway]
-  GW --> OBJ[S3/MinIO Landing]
-  OBJ --> Scan[Antivirus/Checksum]
-  Scan --> Parser[Batch Parser]
-  Parser --> Val[Validation Rules]
-  Val -->|OK| Load[Load Episodes]
-  Val -->|Errors| Reject[Reject File / Error Manifest]
-  Load --> DB[(PostgreSQL)]
-  Load --> K[Kafka case.submitted]
-  Reject --> REP1[Batch Status API: /batches/{id}]
-  DB --> REP1
+  %% Nodes
+  Sender[Hospital HIS]
+  GW[SFTP Gateway]
+  OBJ[Object Storage Landing]
+  Scan[Antivirus and Checksum]
+  Parser[Batch Parser]
+  Val[Validation Rules]
+  Load[Load Episodes]
+  Reject[Error Manifest]
+  DB[(PostgreSQL)]
+  K[(Kafka)]
+  StatusAPI[Batch Status API]
+
+  %% Flow
+  Sender -->|SFTP PUT| GW
+  GW --> OBJ
+  OBJ --> Scan
+  Scan --> Parser
+  Parser --> Val
+  Val -->|OK| Load
+  Val -->|Errors| Reject
+  Load --> DB
+  Load --> K
+  Reject --> StatusAPI
+  DB --> StatusAPI
+
+  %% Optional audit trail
+  GW -. audit .-> OBJ
 ```
 
 **Behavior**
