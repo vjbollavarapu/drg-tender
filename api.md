@@ -277,3 +277,44 @@ flowchart TB
 * **Versioning**: prefix `/v1/*`; avoid breaking changes; deprecate gracefully.
 * **Observability**: correlation IDs on every request; structured logs; traces across LB→API→services.
 
+
+```mermaid
+flowchart LR
+  Mon[External Monitor]
+  LB[Load Balancer]
+  HealthAPI[System Health API]
+  Agg[Health Aggregator]
+
+  subgraph SVC[Services]
+    Intake[Case Intake]
+    DRG[DRG Engine]
+    Tariff[Tariff Engine]
+    Reports[Reporting]
+    Appeals[Appeals]
+    Admin[Admin Config]
+  end
+
+  DB[(PostgreSQL)]
+  DWH[(ClickHouse)]
+  Kafka[(Kafka)]
+  S3[S3 or MinIO]
+  Keycloak[Keycloak OIDC]
+  Obs[Observability Stack]
+
+  Mon -->|GET health| LB --> HealthAPI --> Agg
+  Agg -->|probe liveness| Intake
+  Agg -->|probe liveness| DRG
+  Agg -->|probe liveness| Tariff
+  Agg -->|probe liveness| Reports
+  Agg -->|probe liveness| Appeals
+  Agg -->|probe liveness| Admin
+
+  Agg -->|probe readiness| DB
+  Agg -->|probe readiness| DWH
+  Agg -->|probe readiness| Kafka
+  Agg -->|probe readiness| S3
+  Agg -->|probe readiness| Keycloak
+
+  HealthAPI -. metrics .-> Obs
+  SVC -. logs traces .-> Obs
+
