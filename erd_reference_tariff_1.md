@@ -1,4 +1,4 @@
-```
+```mermaid
 erDiagram
   %% stubs for cross refs
   DRG_ASSIGNMENT { string episode_id string drg_code string drg_version }
