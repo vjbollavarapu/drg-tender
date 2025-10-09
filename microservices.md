@@ -83,6 +83,3 @@ flowchart LR
 * **Users:** Hospital finance & coders get DRG/tariff results; KKM gets national analytics.
 * **External Systems:** SMRP and MyGDX integrate at the edge.
 
----
-
-👉 Would you like me to also prepare a **C4 Container Diagram (Context + Container)** version (more formal for tender submission) so you can show high-level (KKM ↔ Hospitals ↔ DRG System) and then deep dive into microservices?
