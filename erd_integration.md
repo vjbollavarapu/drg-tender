@@ -1,5 +1,7 @@
+# Integration & Validation ERD (API/SFTP with HIS, SMRP, MyGDX)
+
+```mermaid
 erDiagram
-  %% Minimal stubs so relationships resolve
   TENANT {
     string tenant_id
   }
@@ -10,18 +12,18 @@ erDiagram
   BATCH_SUBMISSION {
     string batch_id
     string tenant_id
-    string channel          "API or SFTP"
-    string partner          "HIS / SMRP / MyGDX"
+    string channel
+    string partner
     string file_name
     string checksum
-    string status           "received | validated | loaded | failed"
+    string status
     datetime received_at
   }
 
   BATCH_ITEM {
     string batch_id
     string episode_id
-    string validation_status "ok | warn | error"
+    string validation_status
     int    error_count
   }
 
@@ -37,9 +39,9 @@ erDiagram
   INTEGRATION_LOG {
     string id
     string tenant_id
-    string direction        "inbound | outbound"
-    string partner          "HIS / SMRP / MyGDX"
-    string transport        "API | SFTP"
+    string direction
+    string partner
+    string transport
     string ref_id
     string status
     datetime ts
