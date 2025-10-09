@@ -1,9 +1,3 @@
-Excellent question 👌 — those are critical to show in your tender response because KKM explicitly wants a **cloud-native, microservices, high-availability design** (vs. the old monolith MyCMX).
-
-Here’s how **Load Balancer + Kubernetes (K8s)** fit into the recommended architecture:
-
----
-
 ## ⚖️ Load Balancer (LB)
 
 * **Role:** Entry point for all hospital HIS/API calls, KKM dashboards, and SFTP file transfers.
