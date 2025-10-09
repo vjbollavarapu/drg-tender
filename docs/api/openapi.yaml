@@ -219,3 +219,29 @@ paths:
         - in: query; name: effective_date; schema: { type: string, format: date }
       responses:
         "200": { description: OK }
+/healthz:
+    get:
+      summary: Liveness probe
+      description: Returns overall liveness of the API process
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/HealthStatus" }
+
+  /readiness:
+    get:
+      summary: Readiness probe
+      description: Dependency checks (database, message bus, object storage, auth)
+      responses:
+        "200":
+          description: Ready
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReadinessStatus" }
+        "503":
+          description: Not ready
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ReadinessStatus" }
