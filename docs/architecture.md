@@ -12,21 +12,21 @@ Shows how the National DRG System connects to hospitals, KKM, and other governme
 flowchart LR
     Hospital["Hospital HIS (Doctors, Coders, Finance)"]
     KKM["KKM HQ (Admin, Finance, Analysts)"]
-    Insurer["Insurers / Panel Companies"]
+    Insurer["Insurers or Panel Companies"]
     SMRP["SMRP (Patient Data Warehouse)"]
     MyGDX["MyGDX (Gov Data Exchange)"]
 
     subgraph DRGSystem["National DRG System (MyGovCloud@CFA)"]
-        Portal["Web Portal (Hospitals & KKM)"]
-        API["REST / SFTP APIs"]
+        Portal["Web Portal (Hospitals and KKM)"]
+        API["REST and SFTP APIs"]
     end
 
-    Hospital -->|Submit Cases (API / SFTP)| DRGSystem
-    DRGSystem -->|DRG Codes & Tariffs| Hospital
-    DRGSystem -->|Funding & Analytics| KKM
+    Hospital -->|Submit Cases via API or SFTP| DRGSystem
+    DRGSystem -->|DRG Codes and Tariffs| Hospital
+    DRGSystem -->|Funding and Analytics| KKM
     DRGSystem -->|Claims Data| Insurer
     DRGSystem -->|Data Exchange| SMRP
-    DRGSystem -->|Inter-agency Data| MyGDX
+    DRGSystem -->|Inter Agency Data| MyGDX
 ```
 
 ---
