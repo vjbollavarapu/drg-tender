@@ -73,4 +73,16 @@
 - Security: zero critical vulns; CIS baseline; quarterly pentest
 - DR: RPO ≤ 15 min; RTO ≤ 2 hr (documented drills)
 
+## 5.11 Health Economics Tooling (Stata, TreeAge)
+
+**Purpose:** Offline and controlled analysis used by KKM analysts to derive DRG cost weights, base rates, LOS trim points, and policy scenarios.
+
+- **Stata**: descriptive stats, regression, cost/LOS modeling, case-mix index analysis, outlier studies.
+- **TreeAge Pro**: decision trees and Markov models for tariff policy scenarios and sensitivity analysis.
+- **Deployment model:** licensed analyst workstations or controlled VMs (not part of live API path).
+- **Data in:** curated extracts from ClickHouse (CSV/Parquet) and code sets from ref tables.
+- **Outputs:** versioned tables for `ref.drg_weight`, `ref.base_rate`, and optional trim/outlier policies.
+- **Integration back:** upload via Admin/Config API or secure object storage, with checksum and audit trail.
+- **Governance:** provenance records (model name, version, dataset snapshot, approver, date), immutable logs, and effective-date windows.
+
 ## Optional repository layout
