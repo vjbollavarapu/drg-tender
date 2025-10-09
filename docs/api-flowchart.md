@@ -332,6 +332,27 @@ flowchart LR
 
 ```
 
+```mermaid
+flowchart LR
+  User[Portal User]
+  LB[Load Balancer]
+  Auth[OIDC Authorization]
+  ReportsAPI[Reporting API]
+  DWH[(ClickHouse)]
+  Views[DB Read Views]
+  DB[(PostgreSQL)]
+
+  User -->|GET reports| LB
+  LB --> Auth
+  Auth --> ReportsAPI
+  ReportsAPI --> DWH
+  ReportsAPI --> Views
+  Views --> DB
+  DWH --> ReportsAPI
+  ReportsAPI -->|CSV or JSON| User
+
+
+
 ```markdown
 ## Analyst Extracts and Publication Loop
 
