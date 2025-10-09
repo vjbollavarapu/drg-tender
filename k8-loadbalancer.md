@@ -58,10 +58,3 @@
 * **Kubernetes** = resilient engine room (running microservices).
   Both are **explicitly expected** in the tender because of the “microservices, scalable, high availability on MyGovCloud” requirement.
 
----
-
-Would you like me to **draw you a C4 Container Diagram** (showing Load Balancer + K8s + databases + SMRP/MyGDX integrations) so you can include it in your proposal?
-
-
-Medical References:
-1. None — DOI: file_000000006bdc622f96164a9a63745829
