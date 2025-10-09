@@ -130,8 +130,3 @@ sequenceDiagram
 * **KKM** monitors, analyses, and allocates funding fairly.
 * **Vendor** builds, secures, and maintains the national system.
 * Architecture uses **FastAPI microservices**, **Kubernetes**, and **MyGovCloud@CFA** for scalability, compliance, and interoperability with **SMRP** and **MyGDX**.
-
----
-
-Would you like me to also add **a fifth optional section** — “Technology Stack Summary” (showing backend, database, AI, security components) in the same Markdown style?
-It makes your GitHub doc more complete for reviewers and technical evaluators.
