@@ -330,6 +330,8 @@ flowchart LR
   HealthAPI -. metrics .-> Obs
   SVC -. logs traces .-> Obs
 
+```
+
 ```markdown
 ## Analyst Extracts and Publication Loop
 
