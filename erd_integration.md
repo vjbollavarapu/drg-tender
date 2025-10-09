@@ -1,12 +1,14 @@
-
----
-
-### `docs/db/erd_integration.md`
-```markdown
-# Integration & Validation ERD (API/SFTP with HIS, SMRP, MyGDX)
-
-```mermaid
 erDiagram
+  %% ---- Minimal stubs so cross-diagram refs are defined here too ----
+  TENANT {
+    string tenant_id PK
+  }
+
+  CASE_EPISODE {
+    string episode_id PK
+  }
+  %% ------------------------------------------------------------------
+
   BATCH_SUBMISSION {
     string batch_id PK
     string tenant_id FK
@@ -36,6 +38,7 @@ erDiagram
 
   INTEGRATION_LOG {
     string id PK
+    string tenant_id FK
     string direction       "inbound|outbound"
     string partner         "HIS|SMRP|MyGDX"
     string transport       "API|SFTP"
@@ -44,8 +47,8 @@ erDiagram
     datetime ts
   }
 
-  TENANT ||--o{ BATCH_SUBMISSION : "sends"
-  BATCH_SUBMISSION ||--o{ BATCH_ITEM : "contains"
-  BATCH_ITEM ||--o{ VALIDATION_ERROR : "records"
+  TENANT ||--o{ BATCH_SUBMISSION : sends
+  BATCH_SUBMISSION ||--o{ BATCH_ITEM : contains
+  BATCH_ITEM ||--o{ VALIDATION_ERROR : records
   CASE_EPISODE ||--o{ BATCH_ITEM : "arrived in"
-  TENANT ||--o{ INTEGRATION_LOG : "tracks"
+  TENANT ||--o{ INTEGRATION_LOG : tracks
