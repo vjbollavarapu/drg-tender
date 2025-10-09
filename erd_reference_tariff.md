@@ -1,50 +1,52 @@
-
----
-
-### `docs/db/erd_reference_tariff.md`
-```markdown
 # Reference, Tariff & Grouping Parameters ERD
 
 ```mermaid
 erDiagram
+  %% ---- Minimal stubs so cross-diagram refs resolve here too ----
+  DRG_ASSIGNMENT { string episode_id string drg_code string drg_version }
+  TARIFF_RESULT  { string episode_id string drg_code string base_rate_id }
+  EPISODE_DIAGNOSIS { string episode_id string icd_code }
+  EPISODE_PROCEDURE { string episode_id string proc_code }
+  %% ---------------------------------------------------------------
+
   ICD10 {
-    string code PK
+    string code
     string title
     date   effective_from
     date   effective_to
   }
 
   PROC_CODE {
-    string code PK
+    string code
     string title
     date   effective_from
     date   effective_to
   }
 
   DRG_MASTER {
-    string drg_code PK
-    string title
+    string drg_code
     string drg_version
+    string title
   }
 
   DRG_WEIGHT {
-    string drg_code FK
+    string drg_code
     string drg_version
-    string severity        "A|B|C"
+    string severity
     decimal weight
   }
 
   BASE_RATE {
-    string base_rate_id PK
-    string payer_type     "KKM|PRIVATE"
-    string facility_class "A|B|C|DAYCARE|OPD"
+    string base_rate_id
+    string payer_type
+    string facility_class
     date   effective_from
     date   effective_to
     decimal rate
   }
 
   OUTLIER_POLICY {
-    string policy_id PK
+    string policy_id
     string drg_version
     int    los_lower
     int    los_upper
@@ -52,8 +54,9 @@ erDiagram
     decimal cost_threshold_high
   }
 
-  DRG_ASSIGNMENT ||--o{ DRG_WEIGHT : "uses"
-  TARIFF_RESULT  ||--|| BASE_RATE  : "applies"
-  DRG_MASTER     ||--o{ DRG_WEIGHT : "defines"
-  EPISODE_DIAGNOSIS ||--|| ICD10 : "codes from"
-  EPISODE_PROCEDURE ||--|| PROC_CODE : "codes from"
+  %% Relationships (single-token labels for GitHub Mermaid)
+  DRG_MASTER ||--o{ DRG_WEIGHT : has
+  DRG_ASSIGNMENT }o--|| DRG_MASTER : references
+  TARIFF_RESULT }o--|| BASE_RATE : applies
+  EPISODE_DIAGNOSIS }o--|| ICD10 : uses
+  EPISODE_PROCEDURE }o--|| PROC_CODE : uses
