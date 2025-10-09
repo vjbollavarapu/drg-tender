@@ -1,0 +1,21 @@
+{
+  "batch_id": "BATCH-2025-10-09-0001",
+  "tenant_code": "HOSP-A",
+  "channel": "SFTP",
+  "partner": "HIS",
+  "episodes": [
+    {
+      "client_episode_id": "E-001",
+      "mrn": "MRN-778899",
+      "patient_hash": "p_7e1f9a...",
+      "admission_type": "daycare",
+      "admission_dt": "2025-09-28T09:30:00Z",
+      "discharge_dt": "2025-09-28T15:20:00Z",
+      "icd_codes": ["J18.9"],
+      "procedure_codes": ["45.13"],
+      "los": 1,
+      "source_system": "HIS"
+    }
+  ],
+  "checksum": "sha256:abc123..."
+}
