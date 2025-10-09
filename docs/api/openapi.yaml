@@ -87,6 +87,27 @@ components:
         batch_id: { type: string }
         status: { type: string, enum: [received, validated, loaded, failed] }
         errors: { type: integer }
+    WebhookSubscriptionCreate:
+      type: object
+      required: [url, events]
+      properties:
+        url: { type: string, format: uri }
+        events:
+          type: array
+          items: { type: string }   # e.g., case_*, case_tariffed
+        active: { type: boolean, default: true }
+    WebhookSubscription:
+      allOf:
+        - $ref: '#/components/schemas/WebhookSubscriptionCreate'
+        - type: object
+          properties:
+            id: { type: string }
+            created_at: { type: string, format: date-time }
+            updated_at: { type: string, format: date-time }
+    WebhookSecret:
+      type: object
+      properties:
+        secret: { type: string, description: "Shown only at creation or rotation" }
     Error:
       type: object
       required: [message]
@@ -245,3 +266,67 @@ paths:
           content:
             application/json:
               schema: { $ref: "#/components/schemas/ReadinessStatus" }
+  /webhooks/subscriptions:
+    post:
+      summary: Create webhook subscription
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WebhookSubscriptionCreate' }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WebhookSubscription'
+                  - type: object
+                    properties:
+                      secret:
+                        type: string
+                        description: Shown once; store securely
+  /webhooks/subscriptions/{id}:
+    get:
+      summary: Get subscription
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: id; required: true; schema: { type: string }
+      responses:
+        "200": { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/WebhookSubscription' } } } }
+        "404": { description: Not Found }
+    patch:
+      summary: Update subscription (pause, events, rotate secret)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: id; required: true; schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active: { type: boolean }
+                events:
+                  type: array
+                  items: { type: string }
+                rotate_secret: { type: boolean, default: false }
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/WebhookSubscription'
+                  - $ref: '#/components/schemas/WebhookSecret'
+    delete:
+      summary: Delete subscription
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path; name: id; required: true; schema: { type: string }
+      responses:
+        "204": { description: Deleted }
