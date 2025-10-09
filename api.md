@@ -221,14 +221,26 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-  Call[Client Call] --> WAF[WAF/Rate Limit]
-  WAF --> H{Within quota?}
-  H -- No --> E429[429 Too Many Requests (Retry-After)]
-  H -- Yes --> Svc[Service Handler]
-  Svc --> OK[2xx Success]
-  Svc --> C4xx[4xx Client Errors (validation/RBAC)]
-  Svc --> S5xx[5xx Server Errors]
-  S5xx --> Advise[Client retries with backoff; idempotency on POST]
+  Client[Client Request]
+  WAF[WAF and Rate Limit]
+  H{Within quota}
+  E429[429 Too Many Requests]
+  Retry[Retry After header]
+  Svc[Service Handler]
+  OK[2xx Success]
+  C4xx[4xx Client Error]
+  S5xx[5xx Server Error]
+  Backoff[Client retries with backoff]
+
+  Client --> WAF
+  WAF --> H
+  H -- No --> E429
+  E429 --> Retry
+  H -- Yes --> Svc
+  Svc --> OK
+  Svc --> C4xx
+  Svc --> S5xx
+  S5xx --> Backoff
 ```
 
 ---
