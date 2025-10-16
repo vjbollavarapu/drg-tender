@@ -158,6 +158,9 @@ Perfect. Here’s a **clear comparison table** you can drop straight into your G
 * **Infrastructure** shifts from on-premise to **secure, scalable cloud (MyGovCloud@CFA)**.
 
 ---
+
+# **Migration Roadmap (MyCMX → National DRG System)**
+
 ```mermaid
 gantt
     title MyCMX to National DRG Migration Roadmap
@@ -184,3 +187,39 @@ gantt
     section Phase 5 - Go-Live & Support
     Go-Live National DRG       :e1, 2025-09-01, 1d
     Post-Go-Live Support & Monitoring :e2, after e1, 60d
+```
+
+---
+
+## **Narrative Walkthrough**
+
+* **Phase 1 (Preparation)**
+
+  * Assess MyCMX modules and data scope
+  * Stand up cloud infra (staging + prod in MyGovCloud@CFA)
+
+* **Phase 2 (Data Migration)**
+
+  * Extract data (Patient, Diagnosis, Treatment, Finance)
+  * Clean, validate, transform in QA environment
+  * Run UAT with stakeholders
+
+* **Phase 3 (Functional Migration)**
+
+  * Refactor Patient Mgmt, Costing, DRG Grouper, and EIS modules
+  * Add new modules: Helpdesk, Quality Performance, IAM, Admin Tools
+
+* **Phase 4 (Deployment)**
+
+  * Load validated data into Cloud Prod
+  * Run final checks (validation, security, integration tests)
+  * Conduct user training for MOH, hospitals, insurers, WHO
+
+* **Phase 5 (Go-Live & Support)**
+
+  * Switch to new DRG system
+  * Monitor performance & provide 2 months of hypercare support
+
+---
+
+✅ This provides a **visual roadmap + timeline narrative** that aligns with both tender requirements and real-world implementation phases.
