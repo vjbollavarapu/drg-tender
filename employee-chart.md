@@ -55,6 +55,8 @@ This structure is **hierarchical and modular**, making it easy to push into a Gi
 
 Perfect 👍 Here’s the **Mermaid diagram** in Markdown that you can drop into your GitHub `README.md` or any `.md` doc. GitHub will render this as a **visual org chart**.
 
+````
+
 ````markdown
 # 📊 Employee Org Chart
 
