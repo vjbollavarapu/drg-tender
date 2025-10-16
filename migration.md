@@ -87,20 +87,20 @@ subgraph MyCMX["Existing MyCMX System"]
   A4[MyCMX Database]
 end
 
-A4 -->|Extraction| B1[Extracted Data]
+A4 -->|Extract| B1[Extracted Data]
 
-subgraph Staging["Staging & Transformation (Cloud QA)"]
-  B1 --> B2[Data Cleaning & Validation (UAT)]
-  B2 --> B3[ETL & Transformation]
+subgraph Staging["Staging & Transformation - Cloud QA"]
+  B1 --> B2[Data Cleaning & Validation]
+  B2 --> B3[ETL Transformation]
 end
 
-subgraph NewSystem["New National DRG System (Cloud CFA/CWA)"]
+subgraph NewSystem["New National DRG System - Cloud Prod"]
   C1[Patient Mgmt Module]
   C2[Costing Module]
   C3[DRG Grouper Module]
   C4[EIS + AI Dashboard]
-  C5[New Modules: Helpdesk, Quality Perf., Admin Tools]
-  B3 -->|Load Data| C6[Cloud DRG Database]
+  C5[New Modules: Helpdesk, Quality, Admin]
+  B3 -->|Load| C6[Cloud DRG Database]
   C6 --> C1
   C6 --> C2
   C6 --> C3
@@ -118,7 +118,6 @@ end
 
 NewSystem --> Stakeholders
 ```
-
 ---
 
 ✅ **This unified plan shows**:
