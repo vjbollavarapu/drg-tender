@@ -18,7 +18,6 @@ flowchart LR
     DRG <--> |Backend API Integration via HTTPS| MyGDX
 
     %% Notes (place after all links)
-    %% Notes must be separated by blank lines in GitHub Mermaid
     note over Hospital,DRG
       End users interact only with the DRG System
     end
