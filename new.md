@@ -16,11 +16,9 @@ flowchart LR
 
     %% Internal Links
     DRG -->|Outbound Dataset Export via HTTPS or SFTP| SMRP
-    DRG <-->|Backend API Integration via HTTPS| MyGDX
+    DRG <--> |Backend API Integration via HTTPS| MyGDX
 
-    
     %% Notes
-
     note over Hospital,DRG
       End users interact only with the DRG System
     end
