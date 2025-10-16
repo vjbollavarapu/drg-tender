@@ -19,14 +19,6 @@ flowchart LR
     DRG <--> |Backend API Integration via HTTPS| MyGDX
 
     %% Notes
-    note over Hospital,DRG
-      End users interact only with the DRG System
-    end
-
-    note over DRG,SMRP
-      One way export of grouped or tariffed data
-    end
-
-    note over DRG,MyGDX
-      Backend API exchange only; no direct user access
-    end
+    note over Hospital, DRG: End users interact only with the DRG System
+    note over DRG, SMRP: One way export of grouped or tariffed data
+    note over DRG, MyGDX: Backend API exchange only; no direct user access
