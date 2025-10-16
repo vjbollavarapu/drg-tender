@@ -129,10 +129,6 @@ NewSystem --> Stakeholders
 
 ---
 
-Perfect. Here’s a **clear comparison table** you can drop straight into your GitHub repo, tender documentation, or migration plan.
-
----
-
 # **Comparison: Old MyCMX vs New National DRG System**
 
 | **Aspect**                | **MyCMX (Existing System)**                                                                                                                                                                         | **New National DRG System (Target State)**                                                                                                                                                                                                            |
@@ -223,3 +219,150 @@ gantt
 ---
 
 ✅ This provides a **visual roadmap + timeline narrative** that aligns with both tender requirements and real-world implementation phases.
+
+# Risk & Mitigation Plan — MyCMX → National DRG
+
+## Phase-Wise Risks, Mitigations, Owners, and Go/No-Go Gates
+
+### Phase 1 — Preparation (Assessment & Cloud Setup)
+
+* **Risk:** Incomplete scope (hidden legacy jobs/interfaces).
+  **Mitigation:** 4-week discovery with system inventory, interface catalog, data lineage; sign-off baseline.
+  **Owner:** PMO + Enterprise Architect.
+  **Gate:** Approved Scope & Architecture Decision Record (ADR) pack.
+
+* **Risk:** Environment readiness delays (network/VPN, VPC, IAM).
+  **Mitigation:** Pre-provision IaC (Terraform) blueprints; dry-run in sandbox; parallel security review.
+  **Owner:** Cloud Lead + SecOps.
+  **Gate:** “Green” infra checklist (CIDR, subnets, SGs, KMS, backups, logging).
+
+* **Risk:** Regulatory misalignment (PDPA/HIPAA-like controls).
+  **Mitigation:** Compliance control mapping (PDPA, MOH), DPIA, data minimization policy.
+  **Owner:** Compliance Officer.
+  **Gate:** DPIA sign-off; data classification matrix approved.
+
+---
+
+### Phase 2 — Data Migration (Extract → QA/Staging → Transform/UAT)
+
+* **Risk:** Data quality defects (duplicates, invalid codes, missing keys).
+  **Mitigation:** DQ ruleset (uniqueness, referential integrity, code-set conformance to ICD/ICHI), automated Great Expectations tests; iterative sampling.
+  **Owner:** Data Migration Lead.
+  **Gate:** ≥99.5% conformance on critical DQ rules; exceptions <0.5% with remediation plan.
+
+* **Risk:** Throughput/performance bottlenecks during extraction.
+  **Mitigation:** Windowed extracts, change-data-capture (CDC) for deltas, throttling, off-peak runs.
+  **Owner:** DBA + ETL Engineer.
+  **Gate:** Extract SLA ≤ X hrs for full load; ≤ Y min for daily delta.
+
+* **Risk:** Code-set drift (ICD-10/11/ICHI mismatches, local codes).
+  **Mitigation:** Crosswalk tables, version pinning, governance for local extensions, audit trail.
+  **Owner:** Clinical Coding SME.
+  **Gate:** 100% successfully mapped mandatory codes; unresolved <0.2% with disposition.
+
+* **Risk:** UAT ambiguity on reconciliation.
+  **Mitigation:** Golden datasets, dual-run reconciliation reports (record counts, financial totals, DRG distribution).
+  **Owner:** UAT Manager.
+  **Gate:** Reconciliation variance ≤0.1% on financial totals; no P1 defects.
+
+---
+
+### Phase 3 — Functional Migration (Refactor Core + Add New Modules)
+
+* **Risk:** Regression in DRG results post-refactor.
+  **Mitigation:** Baseline grouper outputs vs MyCMX on stratified samples; unit+contract tests; deterministic test harness.
+  **Owner:** DRG Algorithm Lead.
+  **Gate:** ≥99% match on reference cohorts; discrepancies explained/documented.
+
+* **Risk:** Integration breaks with HIS/middleware/finance.
+  **Mitigation:** API contract testing (PACT), mock providers, FHIR profile validation, backward-compatible versions.
+  **Owner:** Integration Lead.
+  **Gate:** All critical contracts pass CI; zero failing PACT verifications.
+
+* **Risk:** Scope creep (new features during refactor).
+  **Mitigation:** Change control board; feature freeze at code-complete; backlog deferral.
+  **Owner:** PMO.
+  **Gate:** Freeze list signed; variance ≤5%.
+
+---
+
+### Phase 4 — Deployment (Load to Prod, Final Validation, Training)
+
+* **Risk:** Cutover risk (extended downtime, rollback complexity).
+  **Mitigation:** Runbook with timed steps, T-minus rehearsals, blue/green or canary by hospital cohort, rollback artifacts pre-staged.
+  **Owner:** Release Manager.
+  **Gate:** Two successful dry runs; RTO/RPO validated; rollback <30 min.
+
+* **Risk:** Security gaps at go-live (IAM, secrets, audit).
+  **Mitigation:** Pre-go-live security gate: CIS benchmarks, secret rotation, least privilege review, audit sinks verified.
+  **Owner:** SecOps Lead.
+  **Gate:** Zero critical findings; pen-test P1/P2 remediated.
+
+* **Risk:** Low adoption/readiness of stakeholders.
+  **Mitigation:** Role-based training (MOH, hospitals, insurers), micro-learning, job aids, helpdesk SLAs.
+  **Owner:** Change Manager.
+  **Gate:** >90% completion of role training; CSAT ≥4/5 in pilots.
+
+---
+
+### Phase 5 — Go-Live & Hypercare
+
+* **Risk:** Post-go-live stability (performance spikes, data drift).
+  **Mitigation:** SRE playbooks, autoscaling policies, error-budget SLOs, anomaly alerts on DRG mix/cost per case.
+  **Owner:** SRE Lead.
+  **Gate:** 2-week stability trend within SLOs; incident MTTR ≤30 min; no Sev-1.
+
+* **Risk:** Support overload.
+  **Mitigation:** Tiered support, knowledge base, hotfix cadence, weekly CAB.
+  **Owner:** Support Manager.
+  **Gate:** Backlog burn-down to steady-state within 4 weeks.
+
+---
+
+## Cross-Cutting Risks & Systemic Controls
+
+* **Vendor/third-party dependency risk:** Dual-vendor ETL tooling option; exit clauses; escrowed runbooks.
+* **Key-person risk:** Pairing, code reviews, documentation standards, bus-factor ≥2 for every critical domain.
+* **Compliance drift:** Quarterly control attestation; automated evidence collection (logs, scans, access reviews).
+* **Data privacy:** Pseudonymization in non-prod, field-level encryption, masking pipelines.
+
+---
+
+## Operational KPIs & SLOs (Hypercare → BAU)
+
+* **Availability:** ≥99.9% (monthly).
+* **Grouper Consistency:** ≥99% parity vs baseline on control cohorts.
+* **DQ Conformance (critical rules):** ≥99.5%.
+* **ETL Timeliness:** Full load ≤X hrs; daily delta ≤Y min.
+* **Support:** First-response ≤15 min (Sev-1), MTTR ≤30 min.
+* **User Adoption:** DAU/MAU ratio ≥35% in month 1; Training completion ≥90%.
+
+---
+
+## Go/No-Go Checklist (Condensed)
+
+* ✅ Infra “green” checklist signed (security, backups, monitoring).
+* ✅ Data reconciliation thresholds met (counts, totals, DRG mix).
+* ✅ Security gate passed (no criticals).
+* ✅ Dual dry-runs successful; rollback tested.
+* ✅ Stakeholder training ≥90% completion.
+* ✅ Support runbooks & SLAs in force.
+
+---
+
+## RAID Log Template (drop-in Markdown)
+
+| ID    | Type (Risk/Assumption/Issue/Dependency) | Description                         | Impact | Owner     | Status      | Mitigation/Action                       | Due        |
+| ----- | --------------------------------------- | ----------------------------------- | ------ | --------- | ----------- | --------------------------------------- | ---------- |
+| R-001 | Risk                                    | Data quality variance in OP records | High   | Data Lead | Open        | Tighten DQ rules; re-ingest OP cohort   | 2025-03-12 |
+| D-004 | Dependency                              | VPN peering with MOH DC             | High   | NetOps    | In-Progress | Expedite change request; fallback IPSec | 2025-02-05 |
+
+---
+
+## RACI (Illustrative)
+
+* **Accountable:** Program Director (overall), Release Manager (cutover)
+* **Responsible:** Data Lead (ETL/DQ), DRG Algorithm Lead, Integration Lead, SRE Lead
+* **Consulted:** Clinical Coding SME, Compliance Officer, SecOps
+* **Informed:** KKM leadership, Hospital admins, Insurers/WHO
+
