@@ -1,5 +1,3 @@
-# PARTNERSHIP POSITIONING NOTE TO DRG COMPANY
-
 # Strategic Partnership Positioning Note
 ## AWS Cloud Platform, Reliability, Security and Operations Partner
 ### For the National DRG System Programme (36 Months)
