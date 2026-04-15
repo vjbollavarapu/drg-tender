@@ -12,9 +12,6 @@ A hybrid model combining:
 
 ## 🧱 HIGH-LEVEL ARCHITECTURE
 
-```
-
-```text
                 ┌────────────────────────────┐
                 │        End Users           │
                 └────────────┬───────────────┘
@@ -48,9 +45,6 @@ A hybrid model combining:
                 │ - Backup / DR             │
                 │ - Audit Logs              │
                 └────────────────────────────┘
-```
-
----
 
 ## 🔄 DATA FLOW
 
