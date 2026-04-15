@@ -1,4 +1,3 @@
-```markdown
 # 🏗️ Hybrid Cloud Architecture Overview
 
 ---
