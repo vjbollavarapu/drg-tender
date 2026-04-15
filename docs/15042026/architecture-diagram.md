@@ -1,115 +1,56 @@
-````markdown
 # 🏗️ Hybrid Cloud Architecture Overview
-
----
 
 ## 🎯 Architecture Summary
 
 A hybrid model combining:
 - Our managed infrastructure (core application)
-- Select AWS services (where required)
+- Select AWS services where required
 
----
+## 🧱 High-Level Architecture
 
 ```mermaid
 flowchart TB
+    A[End Users] --> B[Cloudflare]
+    B --> C[Cloud Run]
 
-%% Users
-A[End Users]
+    C --> D[PostgreSQL / Cloud SQL / Neon]
+    C --> E[Redis Cache / Queue]
+    C --> F[Object Storage / Cloud Storage / S3]
 
-%% Edge Layer
-B[Cloudflare\nCDN + DNS + WAF + DDoS]
-
-%% Application Layer
-C[Cloud Run\nDjango / FastAPI / APIs]
-
-%% Data Layer
-D[PostgreSQL\nCloud SQL / Neon]
-E[Redis\nCache / Queue]
-F[Object Storage\nCloud Storage / S3]
-
-%% Optional AWS Layer
-G[AWS Services (Optional)]
-G1[API Gateway]
-G2[Backup / DR]
-G3[CloudTrail / Audit Logs]
-
-%% Flow
-A --> B
-B --> C
-
-C --> D
-C --> E
-C --> F
-
-C --> G
-G --> G1
-G --> G2
-G --> G3
-
----
-
-## 🔄 DATA FLOW
-
-1. User accesses system → Cloudflare
-
-2. Cloudflare handles:
-
-   * Routing
-   * Security
-   * Caching
-
-3. Requests are forwarded to:
-
-   * Cloud Run (application services)
-
-4. Application interacts with:
-
-   * PostgreSQL (data)
-   * Redis (cache / async)
-   * Object storage (files)
-
----
-
-## 🔐 SECURITY LAYERS
-
-* **Edge Security**: Cloudflare (WAF + DDoS)
-* **Application Security**: Authentication + RBAC
-* **Data Security**: Encryption + tenant isolation
-
----
-
-## ⚙️ DEPLOYMENT FLOW
-
-* GitHub → CI/CD (GitHub Actions / Cloud Build)
-* Build → Containerized deployment
-* Deploy → Cloud Run (auto-scaling)
-
----
-
-## 🎯 KEY BENEFITS
-
-* No vendor lock-in
-* Reduced cost
-* Simplified architecture
-* High scalability (serverless)
-* Faster deployment cycles
-
+    C --> G[AWS Optional Services]
+    G --> G1[API Gateway]
+    G --> G2[Backup / DR]
+    G --> G3[CloudTrail / Audit Logs]
 ```
 
----
+## 🔄 Data Flow
 
-## ✅ Important Tip
+1. Users access the platform through Cloudflare.
+2. Cloudflare handles DNS, CDN, WAF, and DDoS protection.
+3. Requests are routed to Cloud Run services.
+4. Application services interact with:
+   - PostgreSQL for transactional data
+   - Redis for cache and queue workloads
+   - Object storage for files and documents
+5. Optional AWS services are used only where they add value.
 
-- Works perfectly in:
-  - GitHub Markdown
-  - Notion (with Mermaid enabled)
-  - VS Code Markdown Preview
+## 🔐 Security Layers
 
----
+- Edge security via Cloudflare
+- Application security via authentication and RBAC
+- Data security via encryption and tenant isolation
 
-If you want to go one step further, I can create:
+## ⚙️ Deployment Flow
 
-✅ **Enterprise-grade architecture diagram (presentation style for client)**  
-✅ **AWS vs Your Stack side-by-side diagram (very powerful in meetings)**
-```
+- Source control: GitHub
+- CI/CD: GitHub Actions or Cloud Build
+- Runtime: Cloud Run
+- Data layer: PostgreSQL, Redis, Object Storage
+
+## 🎯 Key Benefits
+
+- Lower cost
+- Reduced architectural duplication
+- Strong scalability
+- Faster deployments
+- Better control over core infrastructure
