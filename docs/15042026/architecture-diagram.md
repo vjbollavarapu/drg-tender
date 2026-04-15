@@ -11,44 +11,41 @@ A hybrid model combining:
 
 ---
 
-## 🧱 HIGH-LEVEL ARCHITECTURE (MERMAID)
-
 ```mermaid
 flowchart TB
 
-    %% Users
-    A[End Users]
+%% Users
+A[End Users]
 
-    %% Edge Layer
-    B[Cloudflare<br/>CDN + DNS + WAF + DDoS]
+%% Edge Layer
+B[Cloudflare\nCDN + DNS + WAF + DDoS]
 
-    %% Application Layer
-    C[Cloud Run<br/>Django / FastAPI / APIs]
+%% Application Layer
+C[Cloud Run\nDjango / FastAPI / APIs]
 
-    %% Data Layer
-    D[PostgreSQL<br/>Cloud SQL / Neon]
-    E[Redis<br/>Cache / Queue]
-    F[Object Storage<br/>Cloud Storage / S3]
+%% Data Layer
+D[PostgreSQL\nCloud SQL / Neon]
+E[Redis\nCache / Queue]
+F[Object Storage\nCloud Storage / S3]
 
-    %% Optional AWS Layer
-    G[AWS Services (Optional)]
-    G1[API Gateway]
-    G2[Backup / DR]
-    G3[CloudTrail / Audit Logs]
+%% Optional AWS Layer
+G[AWS Services (Optional)]
+G1[API Gateway]
+G2[Backup / DR]
+G3[CloudTrail / Audit Logs]
 
-    %% Flow
-    A --> B
-    B --> C
+%% Flow
+A --> B
+B --> C
 
-    C --> D
-    C --> E
-    C --> F
+C --> D
+C --> E
+C --> F
 
-    C --> G
-    G --> G1
-    G --> G2
-    G --> G3
-```
+C --> G
+G --> G1
+G --> G2
+G --> G3
 
 ---
 
