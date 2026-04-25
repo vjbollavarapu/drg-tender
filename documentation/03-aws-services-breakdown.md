@@ -1,79 +1,75 @@
-# AWS Services Breakdown
+# AWS Services Breakdown — Platform Responsibility View
 
-## Purpose
-
-Explain what AWS services provide vs what must be implemented.
-
----
-
-## Categories
-
-### Compute
-- EC2
-- ECS / Fargate
-
-Provide:
-- Runtime environment
-
-Require:
-- Application deployment
-- Scaling logic
+## 🎯 Purpose
+Clarify how AWS services are used within the DRG platform and what responsibilities remain with QK Prima.
 
 ---
 
-### Storage
-- S3
-- EBS
+## 🧱 Principle
 
-Provide:
-- Storage capability
+> AWS provides infrastructure and managed services.  
+> QK Prima is responsible for configuring, integrating, and operating these services to meet system requirements.
 
-Require:
-- Data structure
+---
+
+## Service Categories
+
+### Compute (EC2 / ECS / Fargate)
+Provides:
+- Application runtime environment
+
+QK Prima Responsibilities:
+- Deployment configuration
+- Scaling policies
+- Runtime performance tuning
+
+---
+
+### Storage (S3 / EBS)
+Provides:
+- Data storage capability
+
+QK Prima Responsibilities:
+- Data structure design
 - Lifecycle policies
+- Backup configuration
 
 ---
 
-### Database
-- Aurora
+### Database (Aurora / RDS)
+Provides:
+- Managed database services
 
-Provide:
-- Database engine
-
-Require:
+QK Prima Responsibilities:
 - Schema design
 - Query optimization
+- Data integrity
 
 ---
 
-### Security
-- WAF
-- IAM
-- KMS
+### Security (IAM / WAF / KMS)
+Provides:
+- Security primitives
 
-Provide:
-- Security tools
-
-Require:
-- Policy definition
-- Enforcement
+QK Prima Responsibilities:
+- RBAC implementation
+- Policy enforcement
+- Key management strategy
 
 ---
 
-### Monitoring
-- CloudWatch
-- CloudTrail
+### Monitoring (CloudWatch / CloudTrail)
+Provides:
+- Logging and metrics
 
-Provide:
-- Logs and metrics
-
-Require:
-- Alerting
-- Incident handling
+QK Prima Responsibilities:
+- Alert configuration
+- Dashboard creation
+- Incident response workflows
 
 ---
 
-## Key Conclusion
+## 🎯 Final Statement
 
-AWS provides tools.
-Implementation responsibility remains external.
+> AWS services are fully utilized.  
+> QK Prima ensures they are correctly configured, governed, and operated.
