@@ -1,70 +1,56 @@
-# 📉 Cost Optimization Strategy — DRG Platform
+# Cost Optimization Strategy — AWS-Aligned
 
 ## 🎯 Objective
-
-Reduce unnecessary cloud expenditure while maintaining performance, security, and scalability.
-
----
-
-## 🧱 Optimization Areas
-
-### 1. Compute Optimization
-
-- Prefer serverless (Cloud Run)
-- Auto-scaling based on usage
-- Avoid idle instances
+Optimize cost while fully utilizing AWS services.
 
 ---
 
-### 2. Storage Optimization
+## 🧠 Principle
 
-- Lifecycle policies (archive old data)
-- Avoid unnecessary duplication
-- Compress large datasets
+> Optimization is achieved through efficient usage of AWS services, not replacement.
 
 ---
 
-### 3. Network Optimization
+## Optimization Areas
 
-- Minimize cross-region traffic
-- Use CDN effectively
-- Optimize API payloads
-
----
-
-### 4. Service Rationalization
-
-- Avoid duplicate services:
-  - CloudFront vs Cloudflare
-  - EC2 vs Fargate vs Serverless
-- Remove unused services
+### Compute
+- Auto-scaling configuration
+- Right-sizing instances
 
 ---
 
-### 5. Monitoring Optimization
-
-- Avoid excessive logging retention
-- Archive logs after defined period
-
----
-
-## 📊 Expected Impact
-
-| Area | Potential Savings |
-|------|-----------------|
-| Compute | 40–60% |
-| Security stack | 50–70% |
-| CDN & networking | 60–80% |
-| DevOps tools | 50% |
+### Storage
+- Lifecycle policies
+- Tiered storage
 
 ---
 
-## 🎯 Strategy Principle
-
-> Optimize architecture first, then optimize cost.
+### Database
+- Query optimization
+- Index tuning
 
 ---
 
-## 🚀 Final Statement
+### Network
+- Efficient data transfer design
+- CDN caching
 
-> Cost efficiency is achieved through architectural discipline, not cost cutting.
+---
+
+### Monitoring
+- Log retention policies
+- Efficient alerting
+
+---
+
+## 📊 Strategy
+
+- Use AWS-native tools
+- Continuously monitor usage
+- Optimize configurations
+
+---
+
+## 🎯 Final Statement
+
+> Cost efficiency is achieved through disciplined AWS usage and governance.
