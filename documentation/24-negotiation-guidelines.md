@@ -1,53 +1,27 @@
-# 🤝 Commercial Alignment Guidelines
+# Commercial Alignment Guidelines — AWS Programme
 
-## 🎯 Purpose
+## 🎯 Principle
 
-Provide structured guidance for aligning commercial expectations with scope and responsibility.
-
----
-
-## 🧠 Key Position
-
-> Pricing must align with responsibility ownership.
+> Commercial alignment must reflect responsibility within AWS-based architecture.
 
 ---
 
-## 📊 Negotiation Flexibility
+## Negotiation Areas
 
-| Area | Flexibility |
-|------|------------|
-| Implementation scope | Medium |
-| Timeline adjustments | Medium |
-| Operational SLA | Low |
-| Security & compliance | Low |
-| Data migration | Low |
+### Flexible
+- Delivery phasing
+- Reporting structure
 
 ---
 
-## ⚠️ Non-Negotiable Areas
-
-- SLA ownership
-- Incident response
-- Data migration responsibility
-- Integration ownership
-- DR readiness
+### Fixed
+- SLA responsibility
+- Data migration ownership
+- Integration scope
+- Security requirements
 
 ---
 
-## 🔄 Adjustable Areas
+## 🎯 Final Statement
 
-- Phasing of delivery
-- Reporting format
-- Tooling choices (within AWS)
-
----
-
-## 🎯 Positioning Statement
-
-> Commercial adjustments can be made on delivery approach, but not on responsibility scope.
-
----
-
-## 🚀 Final Statement
-
-> The commercial model must remain aligned with the level of operational accountability required.
+> Scope integrity must be maintained while aligning commercial expectations.
