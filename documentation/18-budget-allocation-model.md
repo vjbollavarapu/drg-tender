@@ -1,54 +1,32 @@
-# 📊 Budget Allocation Model — DRG Platform (36 Months)
+# Budget Allocation Model — AWS Platform
 
 ## 🎯 Purpose
-
-Define how the allocated cloud budget is distributed across system components.
-
----
-
-## 🧱 Budget Distribution (Example Model)
-
-| Category | % Allocation | Description |
-|---------|-------------|------------|
-| Compute | 30% | Application runtime |
-| Database | 20% | Data storage & queries |
-| Storage | 10% | Files & backups |
-| Network | 10% | Data transfer & CDN |
-| Security | 10% | WAF, encryption, monitoring |
-| Integration | 10% | APIs, ingestion pipelines |
-| Contingency | 10% | Unexpected growth |
+Define AWS-based budget allocation for the DRG system.
 
 ---
 
-## ⚠️ Critical Insight
+## 🧱 Allocation
 
-Government budget (e.g., RM 4M) is:
-
-- Not fully infrastructure
-- Includes:
-  - scaling buffer
-  - compliance overhead
-  - future expansion
-
----
-
-## 🎯 Allocation Strategy
-
-- Phase-based spending:
-  - Phase 1 → Low cost (setup)
-  - Phase 2 → Medium (integration)
-  - Phase 3 → High (production scale)
+| Category | Allocation |
+|----------|-----------|
+| Compute | 30% |
+| Database | 20% |
+| Storage | 10% |
+| Network | 10% |
+| Security | 10% |
+| Integration | 10% |
+| Contingency | 10% |
 
 ---
 
-## 📈 Cost Control
+## 📈 Approach
 
-- Monthly budget tracking
-- Quarterly optimization reviews
-- Usage-based adjustments
+- Fully AWS-based allocation
+- Phase-based usage
+- Continuous monitoring
 
 ---
 
-## 🚀 Final Statement
+## 🎯 Final Statement
 
-> Budget must follow system maturity, not fixed allocation.
+> Budget allocation is aligned to AWS service usage and system growth.
