@@ -1,99 +1,70 @@
-# 🏗️ Hybrid Platform Architecture — DRG System
+# 🏗️ Platform Architecture — Responsibility View (AWS / Casemix / QK Prima)
 
 ## 🎯 Overview
-
-This architecture represents a **hybrid cloud model**:
-
-- MyGovCloud (AWS-backed infrastructure)
-- Platform layer managed by QK Prima
-- Application layer provided by Casemix
+Architecture is hosted on **MyGovCloud (AWS-backed)**.  
+This diagram highlights **responsibility boundaries**.
 
 ---
 
-## 🧱 High-Level Architecture
+## 🧱 Architecture (Mermaid)
 
 ```mermaid
 flowchart TB
-    A[End Users / Hospitals] --> B[Cloudflare Edge Layer]
 
-    B --> C[Application Layer - Cloud Run / Containers]
+    %% Users
+    U[Users / Hospitals] --> EDGE[Edge / DNS / CDN]
 
-    C --> D[PostgreSQL Database]
-    C --> E[Redis Cache]
-    C --> F[Object Storage]
+    %% App
+    EDGE --> APP[Application Services]
 
-    C --> G[Integration Layer]
-    G --> G1[SMRP]
-    G --> G2[MyGDX]
-    G --> G3[Hospital Systems]
+    %% Data
+    APP --> DB[(Database)]
+    APP --> OBJ[Object Storage]
+    APP --> CACHE[Cache]
 
-    C --> H[Monitoring & Logging]
-    H --> H1[Metrics]
-    H --> H2[Logs]
-    H --> H3[Alerts]
+    %% Integration
+    APP --> INT[Integration Layer]
+    INT --> EXT1[SMRP]
+    INT --> EXT2[MyGDX]
+    INT --> EXT3[Hospital Systems]
 
-    C --> I[AWS / MyGovCloud Infrastructure]
-    I --> I1[Compute]
-    I --> I2[Storage]
-    I --> I3[Network]
+    %% Observability
+    APP --> OBS[Monitoring / Logging / Alerts]
+
+    %% AWS Layer
+    subgraph AWS["AWS / MyGovCloud (Infrastructure & Managed Services)"]
+        EDGE
+        APP
+        DB
+        OBJ
+        CACHE
+        OBS
+    end
+
+    %% Casemix Layer
+    subgraph CASEMIX["Casemix (Application & DRG Logic)"]
+        APP
+    end
+
+    %% QK Prima Layer
+    subgraph QKP["QK Prima (Platform & Operations)"]
+        INT
+        OBS
+    end
 ```
 
 ---
 
-## 🔄 Data Flow
-
-1. Users access system via Cloudflare  
-2. Requests routed to application layer  
-3. Application interacts with:
-   - Database (PostgreSQL)
-   - Cache (Redis)
-   - Storage (files, reports)
-
-4. Integration layer handles:
-   - SMRP
-   - MyGDX
-   - External hospital data
-
----
-
-## 🔐 Security Layers
-
-- Edge: Cloudflare (WAF, DDoS)
-- Application: Authentication + RBAC
-- Data: Encryption (at rest & in transit)
-
----
-
-## ⚙️ Deployment Flow
-
-- Code → GitHub
-- CI/CD → GitHub Actions / Cloud Build
-- Deployment → Cloud Run / Containers
-- Runtime → Auto-scaled services
-
----
-
-## 🎯 Key Design Principles
-
-- No duplication of services
-- Cloud-native architecture
-- Multi-tenant readiness
-- High availability
-- Observability-first design
-
----
-
-## 🧠 Responsibility View
+## 🧠 Responsibility Summary
 
 | Layer | Owner |
 |------|------|
-| Infrastructure | AWS / MyGovCloud |
-| Platform | QK Prima |
-| Application | Casemix |
+| Infrastructure (compute, storage, network) | AWS / MyGovCloud |
+| Application (DRG logic, modules) | Casemix |
+| Platform (integration, ops, governance) | QK Prima |
 
 ---
 
-## 🚀 Final Statement
+## 🎯 Final Statement
 
-> The cloud provides the foundation.  
-> The platform ensures the system runs reliably at scale.
+> The platform layer connects, governs, and operates the system on AWS.
