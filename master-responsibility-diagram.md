@@ -1,3 +1,4 @@
+```mermaid
 flowchart TB
 
 %% =======================
@@ -12,7 +13,6 @@ classDef aws fill:#F39C12,color:#fff,stroke:#333,stroke-width:2px;
 %% =======================
 %% NODES
 %% =======================
-
 Govt["Government / KKM<br>Policy, Compliance, Acceptance"]
 Casemix["Casemix<br>DRG Logic & Domain"]
 QKPrima["QK Prima<br>Prime System Integrator"]
@@ -22,7 +22,6 @@ AWS["AWS Cloud<br>Infrastructure Layer"]
 %% =======================
 %% APPLICATION LAYER
 %% =======================
-
 subgraph Application Layer
     DRG["DRG System<br>(Grouper, Costing, Output)"]
     AI["AI / Intelligence Layer"]
@@ -32,7 +31,6 @@ end
 %% =======================
 %% INTEGRATION LAYER
 %% =======================
-
 subgraph Integration Layer
     Integration["System Integration<br>(Hospitals, MyGDX, Govt APIs)"]
     Migration["Data Migration<br>(MyCMX → DRG)"]
@@ -41,7 +39,6 @@ end
 %% =======================
 %% CLOUD LAYER
 %% =======================
-
 subgraph Cloud Layer
     Infra["Compute / Storage / DB"]
     Security["Security & Monitoring"]
@@ -51,28 +48,25 @@ end
 %% =======================
 %% RELATIONSHIPS
 %% =======================
-
 Govt -->|Policy / Approval| QKPrima
 Govt -->|Oversight| Casemix
 Govt -->|Compliance| QKPrima
 
 Casemix -->|DRG Logic| DRG
-Casemix -->|Validation Rules| DRG
 
 QKPrima -->|Owns Delivery| DRG
 QKPrima -->|Owns Integration| Integration
 QKPrima -->|Owns Migration| Migration
-QKPrima -->|Owns Governance| AI
-QKPrima -->|Owns Support (App)| Helpdesk
+QKPrima -->|Governance| AI
+QKPrima -->|App Support| Helpdesk
 
 Radmik -->|Runs Infra| Infra
 Radmik -->|Monitoring| Security
-Radmik -->|DR/Backup| DR
+Radmik -->|DR| DR
 
-AWS -->|Provides Platform| Infra
-AWS -->|Cloud Services| Security
+AWS -->|Platform| Infra
+AWS -->|Services| Security
 
-%% Cross-layer links
 DRG --> Integration
 Integration --> Infra
 Migration --> Infra
@@ -80,9 +74,9 @@ Migration --> Infra
 %% =======================
 %% CLASS ASSIGNMENT
 %% =======================
-
 class Govt govt;
 class Casemix casemix;
 class QKPrima qkprima;
 class Radmik radmik;
 class AWS aws;
+```
