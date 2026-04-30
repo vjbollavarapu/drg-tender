@@ -99,9 +99,8 @@
 
 ---
 
-# 🎯 FINAL MERMAID DIAGRAM (UPDATED)
+# 🎯 DIAGRAM
 
-````markdown id="0pp0fm"
 ```mermaid
 flowchart TB
 
@@ -177,8 +176,6 @@ class QKPrima qkprima;
 class Radmik radmik;
 class AWS aws;
 ```
-````
-
 ---
 
 # 🔥 FINAL STRATEGIC POSITIONING
@@ -212,13 +209,3 @@ This version now:
 ✔ Keeps you critical (integration + delivery)
 ✔ Keeps Casemix strong (domain + helpdesk)
 ✔ Keeps Radmik scoped (MSP only)
-
----
-
-If you want next level:
-
-👉 I can convert this into **PowerPoint slides (boardroom-ready)**
-👉 Or build **data flow diagram (hospital → DRG → govt reporting)**
-👉 Or create **commercial split model (who earns what)**
-
-Just tell me 👍
