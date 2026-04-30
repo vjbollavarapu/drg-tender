@@ -1,137 +1,224 @@
-# 🔷 Master Responsibility Matrix — DRG / Casemix on AWS
+# 🔷 MASTER RESPONSIBILITY MATRIX
 
-**Legend:**
+## DRG / Casemix on AWS (Tender-Aligned)
 
-* **Primary (P)** = Owns delivery & accountability
-* **Supporting (S)** = Executes or assists
-* **Oversight (O)** = Governance / approval / audit
-* **None (—)** = Not involved
+### Legend
 
----
-
-## 1. Strategy, Governance & Program Ownership
-
-| Service / Function                             | Govt  | Casemix | QK Prima | Radmik |
-| ---------------------------------------------- | ----- | ------- | -------- | ------ |
-| National DRG Policy & Direction                | **P** | S       | —        | —      |
-| DRG Methodology & Logic                        | O     | **P**   | —        | —      |
-| Project Ownership / Prime Contract             | O     | S       | **P**    | —      |
-| Program Governance & Steering                  | **P** | S       | **P**    | —      |
-| Stakeholder Coordination (Hospitals, Agencies) | **P** | S       | **P**    | —      |
-| SLA Definition & Enforcement                   | O     | S       | **P**    | S      |
+* **P** = Primary Owner
+* **S** = Supporting
+* **O** = Oversight
 
 ---
 
-## 2. System Design & Architecture
+## 1. Governance & Ownership
 
-| Service / Function                              | Govt | Casemix | QK Prima | Radmik |
-| ----------------------------------------------- | ---- | ------- | -------- | ------ |
-| Overall Solution Architecture                   | O    | S       | **P**    | S      |
-| DRG System Functional Design                    | —    | **P**   | S        | —      |
-| Integration Architecture (Gov ↔ Hospital ↔ DRG) | O    | S       | **P**    | —      |
-| Security Architecture (Policy Level)            | O    | S       | **P**    | S      |
-| Cloud Architecture (AWS Design)                 | —    | —       | S        | **P**  |
-
----
-
-## 3. Application & DRG Platform Layer
-
-| Service / Function                      | Govt | Casemix | QK Prima | Radmik |
-| --------------------------------------- | ---- | ------- | -------- | ------ |
-| DRG Engine / Casemix Processing         | —    | **P**   | S        | —      |
-| Application Features & Enhancements     | —    | **P**   | S        | —      |
-| Data Validation & Coding Rules          | O    | **P**   | S        | —      |
-| Reporting Logic (Clinical / Financial)  | O    | **P**   | S        | —      |
-| AI / Intelligence Layer (if applicable) | —    | S       | **P**    | —      |
+| Function                 | Govt  | Casemix | QK Prima | Radmik |
+| ------------------------ | ----- | ------- | -------- | ------ |
+| Policy & Compliance      | **P** | S       | —        | —      |
+| Prime Contract Ownership | O     | **P**   | —        | —      |
+| Program Governance       | O     | **P**   | **S**    | —      |
+| Stakeholder Coordination | **P** | **P**   | S        | —      |
+| SLA Definition           | O     | **P**   | S        | S      |
 
 ---
 
-## 4. Integration & Data Exchange
+## 2. Application & DRG Layer
 
-| Service / Function                    | Govt  | Casemix | QK Prima | Radmik |
-| ------------------------------------- | ----- | ------- | -------- | ------ |
-| Hospital System Integration           | O     | S       | **P**    | —      |
-| Government System Integration         | **P** | S       | **P**    | —      |
-| API Management & Orchestration        | —     | —       | **P**    | S      |
-| Data Transformation (ETL / Pipelines) | —     | S       | **P**    | S      |
-| Data Submission to Govt Systems       | **P** | S       | **P**    | —      |
-
----
-
-## 5. Cloud Infrastructure (AWS Layer)
-
-| Service / Function                     | Govt | Casemix | QK Prima | Radmik |
-| -------------------------------------- | ---- | ------- | -------- | ------ |
-| AWS Account & Billing Governance       | O    | —       | S        | **P**  |
-| Compute (EC2 / Fargate)                | —    | —       | S        | **P**  |
-| Storage (S3 / EBS)                     | —    | —       | S        | **P**  |
-| Database (Aurora / Redis)              | —    | —       | S        | **P**  |
-| Networking (VPC / Load Balancer / CDN) | —    | —       | S        | **P**  |
-| Backup & Disaster Recovery             | O    | —       | S        | **P**  |
+| Function               | Govt | Casemix | QK Prima | Radmik |
+| ---------------------- | ---- | ------- | -------- | ------ |
+| DRG Logic / Grouper    | O    | **P**   | —        | —      |
+| Case-Based Costing     | O    | **P**   | S        | —      |
+| DRG Output / Reporting | O    | **P**   | S        | —      |
+| AI / EIS Layer         | —    | S       | **P**    | —      |
+| Application Features   | —    | **P**   | S        | —      |
 
 ---
 
-## 6. Security, Compliance & Audit
+## 3. Integration & Migration
 
-| Service / Function                        | Govt  | Casemix | QK Prima | Radmik |
-| ----------------------------------------- | ----- | ------- | -------- | ------ |
-| Regulatory Compliance (Healthcare / Govt) | **P** | S       | **P**    | —      |
-| Security Policy & Governance              | O     | S       | **P**    | S      |
-| Threat Detection (GuardDuty, WAF)         | —     | —       | S        | **P**  |
-| Identity & Access Control                 | O     | S       | **P**    | S      |
-| Audit Logs & Reporting                    | **P** | S       | **P**    | S      |
-
----
-
-## 7. Operations & Managed Services (MSP Scope)
-
-| Service / Function              | Govt | Casemix | QK Prima | Radmik |
-| ------------------------------- | ---- | ------- | -------- | ------ |
-| 24×7 Monitoring & Alerting      | —    | —       | S        | **P**  |
-| Incident Response (Infra)       | —    | —       | S        | **P**  |
-| Incident Response (Application) | —    | S       | **P**    | S      |
-| Performance Optimization        | —    | —       | S        | **P**  |
-| Cost Optimization               | O    | —       | S        | **P**  |
-| Operational Reporting           | O    | —       | S        | **P**  |
+| Function                     | Govt | Casemix | QK Prima | Radmik |
+| ---------------------------- | ---- | ------- | -------- | ------ |
+| System Integration           | O    | S       | **P**    | —      |
+| Data Migration (MyCMX → DRG) | O    | **P**   | **P**    | S      |
+| Data Validation              | O    | **P**   | S        | —      |
+| API Orchestration            | —    | —       | **P**    | S      |
 
 ---
 
-## 8. Deployment, Testing & Handover
+## 4. Cloud & Infrastructure
 
-| Service / Function              | Govt  | Casemix | QK Prima | Radmik |
-| ------------------------------- | ----- | ------- | -------- | ------ |
-| Environment Setup               | —     | —       | S        | **P**  |
-| Deployment & Release Management | —     | —       | **P**    | S      |
-| User Acceptance Testing (UAT)   | **P** | S       | **P**    | —      |
-| Training & Knowledge Transfer   | —     | S       | **P**    | —      |
-| Final Handover to Govt          | **P** | S       | **P**    | —      |
-
----
-
-# 🔷 Executive Summary (Use This in Proposal)
-
-> * **Government** owns policy, compliance, and final acceptance
-> * **Casemix** owns DRG logic, clinical models, and processing engine
-> * **QK Prima** is the **Prime System Integrator and Delivery Owner**
-> * **Radmik** is the **AWS Managed Service Provider (Infrastructure & Operations)**
+| Function               | Govt | Casemix | QK Prima | Radmik |
+| ---------------------- | ---- | ------- | -------- | ------ |
+| AWS Infrastructure     | —    | —       | S        | **P**  |
+| Compute / Storage / DB | —    | —       | S        | **P**  |
+| Backup & DR            | O    | —       | S        | **P**  |
+| Monitoring             | —    | —       | S        | **P**  |
+| Security (Technical)   | O    | S       | S        | **P**  |
 
 ---
 
-# 🔷 Strategic Outcome
+## 5. Help Desk & Support (UPDATED – CRITICAL)
 
-This table ensures:
-
-* No overlap
-* No confusion
-* No “gap ownership”
-* Clear commercial boundaries
-* Strong positioning for QK Prima
+| Function                  | Govt | Casemix | QK Prima | Radmik |
+| ------------------------- | ---- | ------- | -------- | ------ |
+| Help Desk (Primary)       | O    | **P**   | S        | —      |
+| DRG Coding Support        | —    | **P**   | —        | —      |
+| User Training Support     | —    | **P**   | S        | —      |
+| Application Issue Support | —    | S       | **P**    | S      |
+| Infrastructure Support    | —    | —       | S        | **P**  |
 
 ---
 
-# 🔷 Critical Positioning Insight (For You)
+## 6. Testing, Deployment & Handover
 
-This matrix proves one thing very clearly:
+| Function           | Govt  | Casemix | QK Prima | Radmik |
+| ------------------ | ----- | ------- | -------- | ------ |
+| Deployment         | —     | S       | **P**    | S      |
+| UAT / PAT / FAT    | **P** | S       | **P**    | —      |
+| Training           | —     | **P**   | S        | —      |
+| Knowledge Transfer | O     | **P**   | **P**    | S      |
+| Final Acceptance   | **P** | S       | **P**    | —      |
 
-> **MSP (Radmik) is only one layer — QK Prima owns the project outcome**
+---
 
+# 🔷 SUPPORT MODEL (VERY POWERFUL FOR TENDER)
+
+## L1 / L2 / L3 STRUCTURE
+
+| Level          | Owner        | Scope                                 |
+| -------------- | ------------ | ------------------------------------- |
+| **L1 Support** | **Casemix**  | DRG coding, user queries, training    |
+| **L2 Support** | **QK Prima** | Application issues, integration, bugs |
+| **L3 Support** | **Radmik**   | Infrastructure, AWS, performance      |
+
+---
+
+## 🔥 Positioning Statement (Use in Proposal)
+
+> “The support model follows a structured multi-tier approach where Casemix provides Level 1 DRG-functional support, QK Prima provides Level 2 application and integration support, and Radmik provides Level 3 infrastructure and cloud support.”
+
+---
+
+# 🎯 FINAL MERMAID DIAGRAM (UPDATED)
+
+````markdown id="0pp0fm"
+```mermaid
+flowchart TB
+
+%% =======================
+%% STYLES
+%% =======================
+classDef govt fill:#FF6B6B,color:#fff,stroke:#333,stroke-width:2px;
+classDef casemix fill:#4ECDC4,color:#fff,stroke:#333,stroke-width:2px;
+classDef qkprima fill:#1A73E8,color:#fff,stroke:#333,stroke-width:2px;
+classDef radmik fill:#9B59B6,color:#fff,stroke:#333,stroke-width:2px;
+classDef aws fill:#F39C12,color:#fff,stroke:#333,stroke-width:2px;
+
+%% =======================
+%% CORE ENTITIES
+%% =======================
+Govt["Government / KKM<br>Policy & Acceptance"]
+Casemix["Casemix (Prime)<br>DRG + Help Desk (L1)"]
+QKPrima["QK Prima (SI)<br>Integration + Delivery (L2)"]
+Radmik["Radmik (MSP)<br>Cloud Ops (L3)"]
+AWS["AWS Cloud"]
+
+%% =======================
+%% SYSTEM LAYERS
+%% =======================
+subgraph Application
+    DRG["DRG System"]
+    Helpdesk["Help Desk (L1 - Casemix)"]
+    AI["AI / EIS"]
+end
+
+subgraph Integration
+    INT["Integration Layer"]
+    MIG["Data Migration"]
+end
+
+subgraph Cloud
+    INFRA["Infrastructure"]
+    SEC["Security & Monitoring"]
+    DR["Backup & DR"]
+end
+
+%% =======================
+%% RELATIONSHIPS
+%% =======================
+Govt --> Casemix
+
+Casemix --> DRG
+Casemix --> Helpdesk
+
+Casemix --> QKPrima
+
+QKPrima --> INT
+QKPrima --> MIG
+QKPrima --> AI
+
+QKPrima --> Radmik
+
+Radmik --> INFRA
+Radmik --> SEC
+Radmik --> DR
+
+AWS --> INFRA
+
+%% DATA FLOW
+DRG --> INT
+INT --> INFRA
+MIG --> INFRA
+
+%% CLASSES
+class Govt govt;
+class Casemix casemix;
+class QKPrima qkprima;
+class Radmik radmik;
+class AWS aws;
+```
+````
+
+---
+
+# 🔥 FINAL STRATEGIC POSITIONING
+
+### ✔ Casemix
+
+* Prime contractor
+* DRG authority
+* Help Desk (L1 owner)
+
+### ✔ QK Prima (YOU)
+
+* System Integrator
+* Migration + Integration owner
+* Application support (L2)
+* Delivery backbone
+
+### ✔ Radmik
+
+* MSP
+* Infrastructure + cloud (L3)
+
+---
+
+# 🚀 FINAL TAKEAWAY
+
+This version now:
+
+✔ Aligns with tender expectations
+✔ Protects you from DRG liability
+✔ Keeps you critical (integration + delivery)
+✔ Keeps Casemix strong (domain + helpdesk)
+✔ Keeps Radmik scoped (MSP only)
+
+---
+
+If you want next level:
+
+👉 I can convert this into **PowerPoint slides (boardroom-ready)**
+👉 Or build **data flow diagram (hospital → DRG → govt reporting)**
+👉 Or create **commercial split model (who earns what)**
+
+Just tell me 👍
